@@ -76,7 +76,7 @@ const MyComponent = () => {
       {processedData && (
         <div className="result-container">
           <p>Result:</p>
-          <p>WP Emoji String: {processedData}</p>
+          <p>{processedData}</p>
           <CopyToClipboardSnackbar text={processedData} />
           <ToastContainer />
         </div>
