@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import GifComponent from './components/GifComponent';
-import './MyComponent.css'; // Import the CSS file for styling
+import './MyComponent.css';
+import CopyToClipboardSnackbar from './components/CopyToClipboard';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const MyComponent = () => {
   const [input1, setInput1] = useState('');
@@ -8,7 +11,7 @@ const MyComponent = () => {
   const [error, setError] = useState(null);
 
   const handleSubmit = async () => {
-    setError(null); // Clear any previous errors
+    setError(null);
 
     const data = {
       string1: input1,
@@ -18,9 +21,9 @@ const MyComponent = () => {
       const response = await fetch('/process_strings', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
       });
 
       if (!response.ok) {
@@ -34,19 +37,34 @@ const MyComponent = () => {
     }
   };
 
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleSubmit();
+    }
+  };
+
   return (
     <div className="container">
-      <h1>WPE Meow</h1>
+      <h1>WP Emoji</h1>
       <GifComponent />
       <div className="input-container">
-        <input type="text" value={input1} onChange={(e) => setInput1(e.target.value)} />
+        <input
+          type="text"
+          value={input1}
+          onChange={(e) => setInput1(e.target.value)}
+          onKeyPress={handleKeyPress} // Add the event handler for Enter key
+        />
       </div>
-      <button className="submit-button" onClick={handleSubmit}>Submit</button>
+      <button className="submit-button" onClick={handleSubmit}>
+        Submit
+      </button>
 
       {processedData && (
         <div className="result-container">
           <p>Result:</p>
           <p>WP Emoji String: {processedData}</p>
+          <CopyToClipboardSnackbar text={processedData} />
+          <ToastContainer />
         </div>
       )}
 
