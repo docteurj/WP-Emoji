@@ -40,6 +40,7 @@ const MyComponent = () => {
 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
+      event.preventDefault();
       handleSubmit();
     }
   };
