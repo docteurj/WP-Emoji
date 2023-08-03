@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import GifComponent from './components/GifComponent';
 import './MyComponent.css'; // Import the CSS file for styling
 
 const MyComponent = () => {
@@ -35,6 +36,8 @@ const MyComponent = () => {
 
   return (
     <div className="container">
+      <h1>WPE Meow</h1>
+      <GifComponent />
       <div className="input-container">
         <input type="text" value={input1} onChange={(e) => setInput1(e.target.value)} />
       </div>
