@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import GifComponent from './components/GifComponent';
 import './MyComponent.css';
 import CopyToClipboardSnackbar from './components/CopyToClipboard';
@@ -9,6 +9,7 @@ const MyComponent = () => {
   const [input1, setInput1] = useState('');
   const [processedData, setProcessedData] = useState(null);
   const [error, setError] = useState(null);
+  const textAreaRef = useRef(null);
 
   const handleSubmit = async () => {
     setError(null);
@@ -31,9 +32,9 @@ const MyComponent = () => {
       }
 
       const responseData = await response.json();
-      setProcessedData(responseData.data); // Update the state with the processed data
+      setProcessedData(responseData.data); 
     } catch (error) {
-      setError('An error occurred while processing the data.'); // Set error state if request fails
+      setError('An error occurred while processing the data.');
     }
   };
 
@@ -43,16 +44,28 @@ const MyComponent = () => {
     }
   };
 
+  const adjustTextAreaHeight = () => {
+    const element = textAreaRef.current;
+    if (element) {
+      element.style.height = 'auto';
+      element.style.height = `${element.scrollHeight}px`;
+    }
+  };
+
   return (
     <div className="container">
-      <h1>WP Emoji</h1>
       <GifComponent />
+      <h1>WP Emoji</h1>
       <div className="input-container">
-        <input
-          type="text"
+        <textarea
+          ref={textAreaRef}
           value={input1}
-          onChange={(e) => setInput1(e.target.value)}
-          onKeyPress={handleKeyPress} // Add the event handler for Enter key
+          onChange={(e) => {
+            setInput1(e.target.value);
+            adjustTextAreaHeight(); 
+          }}
+          onKeyPress={handleKeyPress}
+          rows="1" 
         />
       </div>
       <button className="submit-button" onClick={handleSubmit}>

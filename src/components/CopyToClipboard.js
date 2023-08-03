@@ -1,6 +1,7 @@
 import React from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '../MyComponent.css';
 
 const CopyToClipboardSnackbar = ({ text }) => {
   const copyToClipboard = () => {
@@ -14,7 +15,9 @@ const CopyToClipboardSnackbar = ({ text }) => {
 
   return (
     <div>
-      <button onClick={copyToClipboard}>Copy to Clipboard</button>
+      <button className="button" onClick={copyToClipboard}>
+        Copy to Clipboard
+      </button>
     </div>
   );
 };
